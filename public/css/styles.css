@@ -120,7 +120,7 @@ a:visited {
       .nav ul {
         width: 100%; } }
     @media only screen and (max-width: 750px) {
-      .nav ul #my-boards-nav {
+      .nav ul #nav-2 {
         border-right: 1px solid #717275;
         border-left: 1px solid #717275; } }
     .nav ul li {
@@ -152,7 +152,7 @@ a:visited {
           font-size: 13px; } }
 
 .main-content {
-  background-image: url("../assets/bg.jpg");
+  background-color: #32b44a;
   border: 1px solid transparent; }
   .main-content .content-house {
     width: 700px;

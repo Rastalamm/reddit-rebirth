@@ -1,6 +1,11 @@
+window.onload = function (){
+  dataPull.getMeTheData('http://www.reddit.com/r/all.json')
+
+}
+
 var dataPull = (function(){
 
-  var contentHouse = document.querySelector('.content-house')
+  var contentHouse = document.querySelector('.content-house');
   var dataPermalink;
   var image;
   var title;
@@ -18,67 +23,51 @@ var dataPull = (function(){
   var HTTP_GET = 'GET';
   var httpRequest;
 
-//AJAX requests
-  if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
-    httpRequest = new XMLHttpRequest();
-  } else if (window.ActiveXObject) { // IE 6 and older
-    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-  }
 
-  httpRequest.open('GET', 'http://www.reddit.com/r/AdviceAnimals/.json', true);
-  httpRequest.send(null);
 
-  httpRequest.onreadystatechange = function(){
-    if (httpRequest.readyState === HTTP_DONE) {
-      if (httpRequest.status === HTTP_STATUS_OK) {
-        var res = JSON.parse(httpRequest.responseText);
-        setDataVariables(res);
-      } else {
-        throw new Error('There was a problem with the request.');
-      }
-    }
-  }
+//fucntion to get the data
+function getMeTheData(jsonSource) {
+
+  $.ajax({
+    method: 'GET',
+    url: (jsonSource),
+    dataType: 'json'
+  })
+  .done(function(res) {
+    setDataVariables(res);
+  })
+  .fail(function() {
+    throw new Error('There was a problem with the request.');
+  })
+  .always(function() {
+    //Always update the UI with status
+  });
+}
 
 
 //Assign variable to all the incoming data
 
   function setDataVariables (res){
+
     for (var i = 0; i < res.data.children.length; i++) {
 
       dataPermalink = res.data.children[i].data.permalink;
-      image = res.data.children[i].data.url;
+
+      if(res.data.children[i].data.preview){
+         image = res.data.children[i].data.preview.images[0].source.url;
+      }else{
+        image = 'https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fimages5.fanpop.com%2Fimage%2Fphotos%2F26800000%2FGreen-Sea-Turtle-2-animals-26859642-1920-1200.jpg&f=1';
+      }
+
       title = res.data.children[i].data.title;
       author = res.data.children[i].data.author;
       creation = res.data.children[i].data.created_utc;
       views = res.data.children[i].data.score;
 
-      checkData(dataPermalink, image, title, author, creation, views)
+      dataGrabCreate(dataPermalink, image, title, author, creation, views)
 
     };
   }
-
-//data validation
-
-  function checkData(dataPermalink, image, title, author, creation, views){
-
-    if(image.indexOf('/imgur') > -1 && image.indexOf('.jpg') === -1){
-      image = image.replace('/imgur', '/i.imgur')
-      image = image + '.jpg';
-    }
-
-    if(image.indexOf('imgflip.com/i/') > -1 && image.indexOf('.jpg') === -1){
-      image = image.replace('imgflip.com/i/', 'i.imgflip.com/')
-      console.log('link', image)
-      image = image + '.jpg';
-      console.log('jpg', image)
-    }
-
-
-    dataGrabCreate(dataPermalink, image, title, author, creation, views)
-  }
-
-
-
 
 
 //Function to populate the board
@@ -92,7 +81,7 @@ var dataPull = (function(){
     var articleHouse = document.createElement('div');
     articleHouse.setAttribute('class', 'article-house');
     linkOut.appendChild(articleHouse);
-    console.log('whats passed in', image)
+
     var articlePic = document.createElement('div');
     articlePic.setAttribute('class', 'article-pic');
     articlePic.style.backgroundImage = image;
@@ -132,28 +121,28 @@ var dataPull = (function(){
 
 //Click functions
   var myBoardsClick = function (){
+    console.log('boards click');
     contentHouse.innerHTML = "";
-    httpRequest.open('GET', 'http://www.reddit.com/r/AdviceAnimals/.json', true);
-    httpRequest.send(null);
+    getMeTheData('http://www.reddit.com/r/reallifedoodles.json');
+
   }
 
   var randomClick = function (){
     contentHouse.innerHTML = "";
-    httpRequest.open('GET', 'http://www.reddit.com/r/AdviceAnimals/.json', true);
-    httpRequest.send(null);
+    getMeTheData('http://www.reddit.com/r/AdviceAnimals/.json');
   }
 
   var getTheAppClick = function (){
     contentHouse.innerHTML = "";
-    httpRequest.open('GET', 'http://www.reddit.com/r/AdviceAnimals/.json', true);
-    httpRequest.send(null);
+    getMeTheData('http://www.reddit.com/r/funny/.json');
   }
 
-  document.querySelector('#random-nav').addEventListener('click', myBoardsClick);
-  document.querySelector('#my-boards-nav').addEventListener('click', randomClick);
-  document.querySelector('#get-the-app').addEventListener('click', getTheAppClick);
+  document.querySelector('#nav-1').addEventListener('click', myBoardsClick);
+  document.querySelector('#nav-2').addEventListener('click', randomClick);
+  document.querySelector('#nav-3').addEventListener('click', getTheAppClick);
 
   return {
+    getMeTheData : getMeTheData,
     myBoardsClick : myBoardsClick,
     randomClick : randomClick,
     getTheAppClick : getTheAppClick

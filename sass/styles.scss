@@ -9,6 +9,7 @@ $nav-font: #818285;
 $plus: #B5442C;
 $plus-square: #f47949;
 $hover: #EF5B34;
+$bgcolor: #32b44a;
 
 //Media Query Ranges
 $small: "only screen and (max-width: 750px)";
@@ -85,7 +86,7 @@ a:visited{
       width: 100%;
     }
 
-    #my-boards-nav{
+    #nav-2{
       @media #{$small}{
         border-right: 1px solid $light;
         border-left: 1px solid $light;
@@ -136,7 +137,7 @@ a:visited{
 }
 
 .main-content{
-  background-image: url('../assets/bg.jpg');
+  background-color: $bgcolor;
   border: 1px solid transparent;
 
   .content-house{
@@ -192,7 +193,6 @@ a:visited{
           font-family: 'Lato', sans-serif;
           display: inline-block;
 
-         // @media #{$small}{
 
             &:first-child{
               &:before{
@@ -212,7 +212,7 @@ a:visited{
               box-sizing:border-box;
               top: -2px;
             }
-//}
+
         }
       }
     }
