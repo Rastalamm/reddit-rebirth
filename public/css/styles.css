@@ -85,9 +85,6 @@ a:visited {
   background-color: #ffffff;
   height: 65px; }
   .header .logo-pic {
-    background-image: url("../assets/header_bg.svg");
-    background-position: center;
-    background-repeat: no-repeat;
     text-align: center;
     margin-top: 14px; }
     @media only screen and (max-width: 750px) {

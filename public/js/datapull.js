@@ -56,7 +56,7 @@ function getMeTheData(jsonSource) {
       if(res.data.children[i].data.preview){
          image = res.data.children[i].data.preview.images[0].source.url;
       }else{
-        image = 'https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fimages5.fanpop.com%2Fimage%2Fphotos%2F26800000%2FGreen-Sea-Turtle-2-animals-26859642-1920-1200.jpg&f=1';
+        image = 'https://images.duckduckgo.com/iu/?u=https%3A%2F%2Fi1.ytimg.com%2Fvi%2Fp2H5YVfZVFw%2Fmqdefault.jpg&f=1';
       }
 
       title = res.data.children[i].data.title;
